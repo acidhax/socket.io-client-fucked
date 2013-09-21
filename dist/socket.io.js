@@ -1700,6 +1700,15 @@ var io = ('undefined' === typeof module ? {} : module.exports);
       self.sessionid = sid;
       self.closeTimeout = close * 1000;
       self.heartbeatTimeout = heartbeat * 1000;
+
+      if (self.options['ignore transports']) {
+        for (var i in self.options['ignore transports']) {
+          if (transports.indexOf(i) > -1) {
+            transports.splice(transports.indexOf(i), 1);
+          }
+        }
+      }
+
       if(!self.transports)
           self.transports = self.origTransports = (transports ? io.util.intersect(
               transports.split(',')
